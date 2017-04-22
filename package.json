@@ -1,0 +1,30 @@
+{
+  "name": "gulp-watch-and-touch",
+  "version": "1.0.0",
+  "description": "tiny module for touching files",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dutchenkoOleg/gulp-watch-and-touch.git"
+  },
+  "keywords": [
+    "gulp",
+    "gulp4",
+    "watch",
+    "touch",
+    "mtime"
+  ],
+  "author": "Oleg Dutchenko <dutchenko.o.wezom@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dutchenkoOleg/gulp-watch-and-touch/issues"
+  },
+  "homepage": "https://github.com/dutchenkoOleg/gulp-watch-and-touch#readme",
+  "dependencies": {
+    "gulp-touch": "^1.0.1",
+    "gulp-watch": "^4.3.11"
+  }
+}
