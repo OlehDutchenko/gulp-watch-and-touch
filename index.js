@@ -17,11 +17,11 @@
  */
 module.exports = function (gulp) {
 
-	var watch = require('gulp-watch');
-	var touch = require('gulp-touch');
+	const watch = require('gulp-watch');
+	const touch = require('gulp-touch');
 
-	var watchers = {};
-	var cache = {};
+	const watchers = {};
+	const cache = {};
 
 	/**
 	 * @param {string} uniqueKey
@@ -31,8 +31,8 @@ module.exports = function (gulp) {
 	 */
 	return function (uniqueKey, touchSrc, watchingSrc) {
 
-		var current = JSON.stringify(watchingSrc);
-		var cached = cache[uniqueKey] || "[]";
+		let current = JSON.stringify(watchingSrc);
+		let cached = cache[uniqueKey] || "[]";
 
 		// if they are equal, then nothing has changed
 		// return false value
@@ -44,7 +44,7 @@ module.exports = function (gulp) {
 		cache[uniqueKey] = current;
 
 		// new watcher name
-		var watcherName = `watcher:${uniqueKey}`;
+		let watcherName = `watcher:${uniqueKey}`;
 		if (watchers[watcherName]) {
 			// If it is already running - close it
 			watchers[watcherName].close();

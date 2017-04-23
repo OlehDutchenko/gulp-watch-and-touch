@@ -1,3 +1,143 @@
 # gulp-watch-and-touch
 
 Watch out for dependent files, if they change - touch the file that includes them or any other file you need.
+
+
+## When to use it
+
+___It is not for use in stream pipes___
+
+_If your stream plugins can give some callbacks after their work, with information about included files or If you know how to do it yourself - this it for you_
+
+## What is this for
+
+Suppose that you have something like this file structure in your project
+
+``` shell
+├─┬ project-sources/
+│ ├─┬ sources-1/
+│ │ │ 
+│ │ ├─┬ group-of-files--1a/
+│ │ │ ├── included-in-main.file
+│ │ │ ├── included-in-main-and-addon.file
+│ │ │ ├── included-in-some-other-main.file # similar cases can also be)))
+│ │ │ ├── included-in-addon.file
+│ │ │ └── not-included-anywhere.file
+│ │ │ 
+│ │ ├── group-of-files--1b/
+│ │ ├── group-of-files--1c/
+│ │ │ 
+│ │ ├── main.file
+│ │ └── addon.file
+│ │
+│ ├─┬ sources-2/
+│ │ ├── group-of-files--2a/
+│ │ ├── group-of-files--2b/ 
+│ │ ├── group-of-files--2c/ 
+│ │ └── some-other-main.file
+│ │ └── some-other-addon-or-theme-or-anything-else.file
+│ │
+│ ├─┬ sources-3/
+│ │ └── trigger-my-compilation-when-it-need-from-other-task.file
+```
+
+You have 5 files which must be rendered / compiled, and re-assembled when it REALLY needs in incremental builds. And if you change files that affect only one or two of them, there is no need to re-create all the others. But how to do that?
+
+Of course, you can create 5 or more tasks with different source parameters and for each put an individual observer (gulp.watch() or some plugin for watching) - but this approach is not very convenient in case of changing dependencies, disable or enable imported files, etc. You need to manually rewrite each time your tasks or part of them
+
+Another option is to put things on everything in order to not rewrite anything, but this fundamentally kills our goal, which is to optimize and speed up the process of work.
+
+_Our offer. Look at the whole situation from a different angle.
+If something happens to the connected files - they must signal about this to the files in which they are used_
+
+__Example__
+
+```js
+var gulp = require('gulp');  // 3 or 4
+
+// function wrapper
+var watchAndTouch = require('gulp-watch-and-touch');  
+
+/**
+ * give your gulp to it
+ * and get function with its closure
+ * @function
+ * @param {string} uniqueKey
+ * @param {string|Array} touchSrc
+ * @param {string|Array} watchingSrc
+ * @return {boolean}
+ */
+var wnt1 = watchAndTouch(gulp); 
+
+/**
+ * give your gulp to it
+ * and get function with its closure
+ * @function
+ * @param {string} uniqueKey
+ * @param {string|Array} touchSrc
+ * @param {string|Array} watchingSrc
+ * @return {boolean}
+ */
+var wnt2 = watchAndTouch(gulp);
+
+// plugin which can give your
+// callback with information
+// about the included files there
+var renderPlugin = require('some-gulp-plugin'); 
+
+
+
+gulp.task('task1', function() {
+	return gulp.src('sources-1/*.file') // yes that's all source you need ))
+		.pipe(renderPlugin({
+			option1: 'value1',
+			option2: 'value2',
+			afterRenderCallback: function(file, result, stats) {
+				var includedSources = stats.includedFiles;
+				var pathToCurrentFile = file.path;
+				var uniqFileKey = pathToCurrentFile.replace(/\\|\/|\.|\s|/g, '_');
+				
+				var isChanged = wnt1(uniqFileKey, pathToCurrentFile, includedSources);
+				if (isChanged) {
+					console.log( file.relative + ' change dependencies' );
+				}
+			}
+		}))
+});
+
+// or
+// ==============
+
+var analyseFn = function() {
+	// some actions that you know how to write
+	// for analyse your files for getting information
+	// about the included files there
+	// on done call
+	wnt2(uniqueKey, touchSrc, watchingSrc); 
+};
+
+```
+
+
+## How it works
+
+This small module combines the work of two plug-ins [`gulp-watch`](https://www.npmjs.com/package/gulp-watch) and [`gulp-touch`](https://www.npmjs.com/package/gulp-touch). In addition, he cache the results for each file.  
+If you are interested in more details - look at the [source code](https://github.com/dutchenkoOleg/gulp-watch-and-touch/blob/master/index.js) - it is really tiny script ))
+
+## Installing
+
+```shell
+npm install --save gulp-auto-watch
+# or using yarn cli
+yarn add gulp-auto-watch
+```
+
+## Tests
+
+Sorry but here no tests.
+
+## Contributing
+
+https://github.com/dutchenkoOleg/gulp-watch-and-touch/issues
+
+
