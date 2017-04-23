@@ -1,5 +1,9 @@
 # gulp-watch-and-touch
 
+![npm](https://img.shields.io/badge/node-6.10.2-yellow.svg)
+![es2015](https://img.shields.io/badge/ECMAScript-2015_(ES6)-blue.svg)
+![license](https://img.shields.io/badge/License-MIT-orange.svg)
+
 Watch out for dependent files, if they change - touch the file that includes them or any other file you need.
 
 
@@ -16,7 +20,6 @@ Suppose that you have something like this file structure in your project
 ``` shell
 ├─┬ project-sources/
 │ ├─┬ sources-1/
-│ │ │ 
 │ │ ├─┬ group-of-files--1a/
 │ │ │ ├── included-in-main.file
 │ │ │ ├── included-in-main-and-addon.file
@@ -34,7 +37,7 @@ Suppose that you have something like this file structure in your project
 │ │ ├── group-of-files--2a/
 │ │ ├── group-of-files--2b/ 
 │ │ ├── group-of-files--2c/ 
-│ │ └── some-other-main.file
+│ │ ├── some-other-main.file
 │ │ └── some-other-addon-or-theme-or-anything-else.file
 │ │
 │ ├─┬ sources-3/
@@ -53,62 +56,61 @@ If something happens to the connected files - they must signal about this to the
 __Example__
 
 ```js
-var gulp = require('gulp');  // 3 or 4
+import gulp from 'gulp';
 
 // function wrapper
-var watchAndTouch = require('gulp-watch-and-touch');  
+import watchAndTouch from 'gulp-watch-and-touch';  
 
 /**
  * give your gulp to it
  * and get function with its closure
- * @function
+ * @const {Function}
  * @param {string} uniqueKey
  * @param {string|Array} touchSrc
  * @param {string|Array} watchingSrc
  * @return {boolean}
  */
-var wnt1 = watchAndTouch(gulp); 
+const wnt1 = watchAndTouch(gulp); 
 
 /**
  * give your gulp to it
  * and get function with its closure
- * @function
+ * @const {Function}
  * @param {string} uniqueKey
  * @param {string|Array} touchSrc
  * @param {string|Array} watchingSrc
  * @return {boolean}
  */
-var wnt2 = watchAndTouch(gulp);
+const wnt2 = watchAndTouch(gulp);
 
 // plugin which can give your
 // callback with information
 // about the included files there
-var renderPlugin = require('some-gulp-plugin'); 
+import renderPlugin from 'some-gulp-plugin'; 
 
 
-
-gulp.task('task1', function() {
+export function renderTask1 () {
 	return gulp.src('sources-1/*.file') // yes that's all source you need ))
 		.pipe(renderPlugin({
 			option1: 'value1',
 			option2: 'value2',
 			afterRenderCallback: function(file, result, stats) {
-				var includedSources = stats.includedFiles;
-				var pathToCurrentFile = file.path;
-				var uniqFileKey = pathToCurrentFile.replace(/\\|\/|\.|\s|/g, '_');
+				let includedSources = stats.includedFiles;
+				let pathToCurrentFile = file.path;
+				let uniqFileKey = pathToCurrentFile.replace(/\\|\/|\.|\s|/g, '_');
 				
-				var isChanged = wnt1(uniqFileKey, pathToCurrentFile, includedSources);
-				if (isChanged) {
-					console.log( file.relative + ' change dependencies' );
+				let isChanged = wnt1(uniqFileKey, pathToCurrentFile, includedSources);
+				if (isChanged) { // an example
+					console.log( `${ file.relative } change dependencies:\n${ includedSources.join('\n') }` );
 				}
 			}
 		}))
-});
+}
 
 // or
 // ==============
 
-var analyseFn = function() {
+const analyseFn = () => {
 	// some actions that you know how to write
 	// for analyse your files for getting information
 	// about the included files there
@@ -124,6 +126,15 @@ var analyseFn = function() {
 This small module combines the work of two plug-ins [`gulp-watch`](https://www.npmjs.com/package/gulp-watch) and [`gulp-touch`](https://www.npmjs.com/package/gulp-touch). In addition, he cache the results for each file.  
 If you are interested in more details - look at the [source code](https://github.com/dutchenkoOleg/gulp-watch-and-touch/blob/master/index.js) - it is really tiny script ))
 
+
+## Warn
+
+it's use es6 syntax
+
+- ECMAScript 2015 (ES6) and beyond - https://nodejs.org/en/docs/es6/
+- Node.js ES2015 Support - http://node.green/ 
+
+
 ## Installing
 
 ```shell
@@ -138,6 +149,6 @@ Sorry but here no tests.
 
 ## Contributing
 
-https://github.com/dutchenkoOleg/gulp-watch-and-touch/issues
+You're welcome - [issues](https://github.com/dutchenkoOleg/gulp-watch-and-touch/issues) and [pulls](https://github.com/dutchenkoOleg/gulp-watch-and-touch/pulls)
 
 
