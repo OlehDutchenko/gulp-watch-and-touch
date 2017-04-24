@@ -15,7 +15,7 @@
  * @param  {Gulp} gulp
  * @return {function}
  */
-export default function (gulp) {
+module.exports = function (gulp) {
 
 	const watch = require('gulp-watch');
 	const touch = require('gulp-touch');
