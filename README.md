@@ -2,16 +2,22 @@
 
 ![npm](https://img.shields.io/badge/node-6.3.1-yellow.svg)
 ![es2015](https://img.shields.io/badge/ECMAScript-2015_(ES6)-blue.svg)
-![license](https://img.shields.io/badge/License-MIT-orange.svg)
+![license](https://img.shields.io/badge/License-MIT-blue.svg)
+[![Build Status](https://travis-ci.org/dutchenkoOleg/gulp-watch-and-touch.svg?branch=master)](https://travis-ci.org/dutchenkoOleg/gulp-watch-and-touch)
+[![Dependencies](https://www.versioneye.com/user/projects/592a776360820000641045ad/badge.svg?style=flat)](https://www.versioneye.com/user/projects/592a776360820000641045ad?child=summary)
 
-Watch out for dependent files, if they change - touch the file that includes them or any other file you need.
+> _Watch out for dependent files,_  
+> _if they change - touch the file that includes them or any other file you need._
+
+[![js-happiness-style](https://cdn.rawgit.com/JedWatson/happiness/master/badge.svg)](https://github.com/JedWatson/happiness)
 
 
 ## When to use it
 
 ___It is not for use in stream pipes___
 
-_If your stream plugins can give some callbacks after their work, with information about included files or If you know how to do it yourself - this it for you_
+_If your stream plugins can give some callbacks after their work,_  
+_with information about included files or If you know how to do it yourself - this it for you_
 
 ## What is this for
 
@@ -145,10 +151,19 @@ yarn add gulp-auto-watch
 
 ## Tests
 
-Sorry but here no tests.
+`npm test` for testing code style
+
+## To Do
+
+- Write more tests
+- Write more examples with live code
+
+## Changelog
+
+Please read [CHANGELOG.md](https://github.com/dutchenkoOleg/gulp-watch-and-touch/blob/master/CHANGELOG.md)
+
 
 ## Contributing
 
-You're welcome - [issues](https://github.com/dutchenkoOleg/gulp-watch-and-touch/issues) and [pulls](https://github.com/dutchenkoOleg/gulp-watch-and-touch/pulls)
-
+Please read [CONTRIBUTING.md](https://github.com/dutchenkoOleg/gulp-watch-and-touch/blob/master/CONTRIBUTING.md)
 

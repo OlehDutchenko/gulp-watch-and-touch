@@ -16,7 +16,6 @@
  * @return {function}
  */
 module.exports = function (gulp) {
-
 	const watch = require('gulp-watch');
 	const touch = require('gulp-touch');
 
@@ -30,9 +29,8 @@ module.exports = function (gulp) {
 	 * @return {boolean}
 	 */
 	return function (uniqueKey, touchSrc, watchingSrc) {
-
 		let current = JSON.stringify(watchingSrc);
-		let cached = cache[uniqueKey] || "[]";
+		let cached = cache[uniqueKey] || JSON.stringify([]);
 
 		// if they are equal, then nothing has changed
 		// return false value
@@ -60,5 +58,5 @@ module.exports = function (gulp) {
 		// when changing the cache and starting a new watcher - return the true value.
 		// this can be used for any of your actions, conditions, etc.
 		return true;
-	}
+	};
 };
