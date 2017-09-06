@@ -5,6 +5,11 @@
 ![license](https://img.shields.io/badge/License-MIT-blue.svg)
 [![Build Status](https://travis-ci.org/dutchenkoOleg/gulp-watch-and-touch.svg?branch=master)](https://travis-ci.org/dutchenkoOleg/gulp-watch-and-touch)
 [![Dependencies](https://www.versioneye.com/user/projects/592a776360820000641045ad/badge.svg?style=flat)](https://www.versioneye.com/user/projects/592a776360820000641045ad?child=summary)
+ 
+ 
+:us: English
+|
+:ru: [Русский язык](https://github.com/dutchenkoOleg/gulp-watch-and-touch/blob/master/README-RU.md)
 
 > _Watch out for dependent files,_  
 > _if they change - touch the file that includes them or any other file you need._
@@ -12,14 +17,14 @@
 [![js-happiness-style](https://cdn.rawgit.com/JedWatson/happiness/master/badge.svg)](https://github.com/JedWatson/happiness)
 
 
-## When to use it
+## When to use it?
 
 ___It is not for use in stream pipes___
 
 _If your stream plugins can give some callbacks after their work,_  
 _with information about included files or If you know how to do it yourself - this it for you_
 
-## What is this for
+## What is this for?
 
 Suppose that you have something like this file structure in your project
 
@@ -54,7 +59,7 @@ You have 5 files which must be rendered / compiled, and re-assembled when it REA
 
 Of course, you can create 5 or more tasks with different source parameters and for each put an individual observer (gulp.watch() or some plugin for watching) - but this approach is not very convenient in case of changing dependencies, disable or enable imported files, etc. You need to manually rewrite each time your tasks or part of them
 
-Another option is to put things on everything in order to not rewrite anything, but this fundamentally kills our goal, which is to optimize and speed up the process of work.
+Another option is to put an `watch` on all the files you have to not overwrite anything, but this completely kills our goal, which is to optimize and speed up the process of work, only with those files that are really needed at that moment.
 
 _Our offer. Look at the whole situation from a different angle.
 If something happens to the connected files - they must signal about this to the files in which they are used_
@@ -127,9 +132,9 @@ const analyseFn = () => {
 ```
 
 
-## How it works
+## How it works?
 
-This small module combines the work of two plug-ins [`gulp-watch`](https://www.npmjs.com/package/gulp-watch) and [`gulp-touch`](https://www.npmjs.com/package/gulp-touch). In addition, he cache the results for each file.  
+This small module combines the work of two plug-ins [`gulp-watch`](https://www.npmjs.com/package/gulp-watch) and [`gulp-touch`](https://www.npmjs.com/package/gulp-touch). In addition, the cache the results for each file.  
 If you are interested in more details - look at the [source code](https://github.com/dutchenkoOleg/gulp-watch-and-touch/blob/master/index.js) - it is really tiny script ))
 
 
@@ -158,12 +163,11 @@ yarn add gulp-auto-watch
 - Write more tests
 - Write more examples with live code
 
-## Changelog
+---
 
-Please read [CHANGELOG.md](https://github.com/dutchenkoOleg/gulp-watch-and-touch/blob/master/CHANGELOG.md)
+## Project Info
 
-
-## Contributing
-
-Please read [CONTRIBUTING.md](https://github.com/dutchenkoOleg/gulp-watch-and-touch/blob/master/CONTRIBUTING.md)
-
+* [Change log](https://github.com/dutchenkoOleg/gulp-watch-and-touch/blob/master/CHANGELOG.md)
+* [Contributing Guidelines](https://github.com/dutchenkoOleg/gulp-watch-and-touch/blob/master/CONTRIBUTING.md)
+* [Contributor Covenant Code of Conduct](https://github.com/dutchenkoOleg/gulp-watch-and-touch/blob/master/CODE_OF_CONDUCT.md)
+* [License MIT](https://github.com/dutchenkoOleg/gulp-watch-and-touch/blob/master/LICENSE)
