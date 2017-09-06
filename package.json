@@ -4,7 +4,8 @@
   "description": "Watch out for dependent files, if they change - touch the file that includes them or any other file you need.",
   "main": "index.js",
   "scripts": {
-    "test": "happiness --verbose | snazzy"
+    "happiness": "happiness --verbose --fix | snazzy",
+    "test": "npm run happiness"
   },
   "repository": {
     "type": "git",
@@ -17,7 +18,7 @@
     "touch",
     "mtime"
   ],
-  "author": "Oleg Dutchenko <dutchenko.o.wezom@gmail.com>",
+  "author": "Oleg Dutchenko <dutchenko.o.dev@gmail.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/dutchenkoOleg/gulp-watch-and-touch/issues"
@@ -31,7 +32,7 @@
     "gulp-watch": "^4.3.11"
   },
   "devDependencies": {
-    "happiness": "^7.1.2",
+    "happiness": "^10.0.2",
     "snazzy": "^7.0.0"
   }
 }
