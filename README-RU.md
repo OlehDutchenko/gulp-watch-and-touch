@@ -19,14 +19,14 @@
 
 ## Когда этот плагин использовать?
 
-___Он не предназначен для использования в пайпах gulp потока___
+___Плагин не предназначен для использования в "пайпах" gulp потока___
 
 _Если ваши плагины могут дать обратные вызовы после их работы,_  
-_с информацией о включенных файлах или если вы знаете, как это сделать самостоятельно - это для вас_
+_с информацией о включенных файлах или если Вы знаете, как это сделать самостоятельно - это для Вас_
 
 ## Для чего этот плагин?
 
-Предположим, что у вас есть что-то вроде этой файловой структуры в вашем проекте
+Предположим, что у Вас есть что-то вроде этой файловой структуры в Вашем проекте
 
 ``` shell
 ├─┬ project-sources/
@@ -55,14 +55,14 @@ _с информацией о включенных файлах или если 
 │ │ └── trigger-my-compilation-when-it-need-from-other-task.file
 ```
 
-У вас есть 5 файлов, которые должны быть трансформированы / скомпилированы и повторно собраны, когда это ДЕЙСТВИТЕЛЬНО нужно в процесск инкрементальных сборок. И если вы меняете файлы, которые затрагивают только один или два из них, нет необходимости воссоздавать все остальные. Но как это сделать?
+У Вас есть 5 файлов, которые должны быть трансформированы / скомпилированы и повторно собраны, когда это ДЕЙСТВИТЕЛЬНО нужно в процессе инкрементальных сборок. И если Вы меняете файлы, которые затрагивают только один или два из них, нет необходимости воссоздавать все остальные. Но как это сделать?
 
-Конечно, вы можете создавать 5 или более задач с разными исходными параметрами и для каждого помещать отдельного наблюдателя (`gulp.watch ()` или какой нибудь плагин для этого), но этот подход не очень удобен в случае изменения зависимостей, отключения или включения импортов файлы и т.д. Вы должны, каждый раз, вручную переписывать свои задачи или их часть.
+Конечно, Вы можете создавать 5 или более задач с разными исходными параметрами и для каждого помещать отдельного наблюдателя (`gulp.watch()` или какой нибудь плагин для этого), но этот подход не очень удобен в случае изменения зависимостей, отключения или включения импортов и т.д. Вы должны, каждый раз, вручную переписывать свои задачи или их часть.
 
 Еще один вариант - поставить `watch` на все файлы которые у Вас есть, чтобы не переписывать что-либо, но это в корне убивает нашу цель, которая заключается в оптимизации и ускорении процесса работы, только с теми файлами которые действительно нужны в данный момент.
 
-_Наше предложение. Посмотрите на всю ситуацию под другим углом.
- Если что-то происходит с подключенными файлами - они должны сообщать об этом файлам, в которых они используются_
+_Наше предложение. Посмотрите на всю ситуацию под другим углом. 
+ Если что-то происходит с подключенными файлами - они должны сообщать об этом файлам, в которых они используются!_
 
 __Пример__
 
@@ -99,34 +99,33 @@ const wnt2 = watchAndTouch(gulp);
 // about the included files there
 import renderPlugin from 'some-gulp-plugin'; 
 
-
 export function renderTask1 () {
-	return gulp.src('sources-1/*.file') // yes that's all source you need ))
-		.pipe(renderPlugin({
-			option1: 'value1',
-			option2: 'value2',
-			afterRenderCallback: function(file, result, stats) {
-				let includedSources = stats.includedFiles;
-				let pathToCurrentFile = file.path;
-				let uniqFileKey = pathToCurrentFile.replace(/\\|\/|\.|\s|/g, '_');
-				
-				let isChanged = wnt1(uniqFileKey, pathToCurrentFile, includedSources);
-				if (isChanged) { // an example
-					console.log( `${ file.relative } change dependencies:\n${ includedSources.join('\n') }` );
-				}
-			}
-		}))
+    return gulp.src('sources-1/*.file') // yes that's all source you need ))
+        .pipe(renderPlugin({
+            option1: 'value1',
+            option2: 'value2',
+            afterRenderCallback: function(file, result, stats) {
+                let includedSources = stats.includedFiles;
+                let pathToCurrentFile = file.path;
+                let uniqFileKey = pathToCurrentFile.replace(/\\|\/|\.|\s|/g, '_');
+
+                let isChanged = wnt1(uniqFileKey, pathToCurrentFile, includedSources);
+                if (isChanged) { // an example
+                    console.log( `${ file.relative } change dependencies:\n${ includedSources.join('\n') }` );
+                }
+            }
+        }))
 }
 
 // or
 // ==============
 
 const analyseFn = () => {
-	// some actions that you know how to write
-	// for analyse your files for getting information
-	// about the included files there
-	// on done call
-	wnt2(uniqueKey, touchSrc, watchingSrc); 
+    // some actions that you know how to write
+    // for analyse your files for getting information
+    // about the included files there
+    // on done call
+    wnt2(uniqueKey, touchSrc, watchingSrc); 
 };
 
 ```

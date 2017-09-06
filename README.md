@@ -57,12 +57,12 @@ Suppose that you have something like this file structure in your project
 
 You have 5 files which must be rendered / compiled, and re-assembled when it REALLY needs in incremental builds. And if you change files that affect only one or two of them, there is no need to re-create all the others. But how to do that?
 
-Of course, you can create 5 or more tasks with different source parameters and for each put an individual observer (gulp.watch() or some plugin for watching) - but this approach is not very convenient in case of changing dependencies, disable or enable imported files, etc. You need to manually rewrite each time your tasks or part of them
+Of course, you can create 5 or more tasks with different source parameters and for each put an individual observer (`gulp.watch()` or some plugin for watching) - but this approach is not very convenient in case of changing dependencies, disable or enable imported files, etc. You need to manually rewrite each time your tasks or part of them
 
 Another option is to put an `watch` on all the files you have to not overwrite anything, but this completely kills our goal, which is to optimize and speed up the process of work, only with those files that are really needed at that moment.
 
 _Our offer. Look at the whole situation from a different angle.
-If something happens to the connected files - they must signal about this to the files in which they are used_
+If something happens to the connected files - they must signal about this to the files in which they are used!_
 
 __Example__
 
@@ -99,34 +99,33 @@ const wnt2 = watchAndTouch(gulp);
 // about the included files there
 import renderPlugin from 'some-gulp-plugin'; 
 
-
 export function renderTask1 () {
-	return gulp.src('sources-1/*.file') // yes that's all source you need ))
-		.pipe(renderPlugin({
-			option1: 'value1',
-			option2: 'value2',
-			afterRenderCallback: function(file, result, stats) {
-				let includedSources = stats.includedFiles;
-				let pathToCurrentFile = file.path;
-				let uniqFileKey = pathToCurrentFile.replace(/\\|\/|\.|\s|/g, '_');
-				
-				let isChanged = wnt1(uniqFileKey, pathToCurrentFile, includedSources);
-				if (isChanged) { // an example
-					console.log( `${ file.relative } change dependencies:\n${ includedSources.join('\n') }` );
-				}
-			}
-		}))
+    return gulp.src('sources-1/*.file') // yes that's all source you need ))
+        .pipe(renderPlugin({
+            option1: 'value1',
+            option2: 'value2',
+            afterRenderCallback: function(file, result, stats) {
+                let includedSources = stats.includedFiles;
+                let pathToCurrentFile = file.path;
+                let uniqFileKey = pathToCurrentFile.replace(/\\|\/|\.|\s|/g, '_');
+
+                let isChanged = wnt1(uniqFileKey, pathToCurrentFile, includedSources);
+                if (isChanged) { // an example
+                    console.log( `${ file.relative } change dependencies:\n${ includedSources.join('\n') }` );
+                }
+            }
+        }))
 }
 
 // or
 // ==============
 
 const analyseFn = () => {
-	// some actions that you know how to write
-	// for analyse your files for getting information
-	// about the included files there
-	// on done call
-	wnt2(uniqueKey, touchSrc, watchingSrc); 
+    // some actions that you know how to write
+    // for analyse your files for getting information
+    // about the included files there
+    // on done call
+    wnt2(uniqueKey, touchSrc, watchingSrc); 
 };
 
 ```
