@@ -133,8 +133,8 @@ const analyseFn = () => {
 
 ## Как это работает?
 
-Этот небольшой модуль сочетает в себе работу двух плагинов [`gulp-watch`](https://www.npmjs.com/package/gulp-watch) и [`gulp-touch`](https://www.npmjs.com/package/gulp-touch). Кроме того, он кэширует результаты для каждого файла.  
-Если вас интересует более подробная информация - посмотрите [исходный код](https://github.com/dutchenkoOleg/gulp-watch-and-touch/blob/master/index.js) - это действительно крошечный скрипт ))
+Посмотрите [исходный код](https://github.com/dutchenkoOleg/gulp-watch-and-touch/blob/master/index.js) - это действительно крошечный скрипт )).  
+_Кроме того, он кэширует результаты для каждого файла._
 
 
 ## Предупреждение

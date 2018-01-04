@@ -7,8 +7,11 @@
  *
  * @module gulp-watch-and-touch
  * @author Oleg Dutchenko <dutchenko.o.wezom@gmail.com>
- * @version 1.0.0
+ * @version 1.2.0
  */
+
+const watch = require('gulp-watch');
+const fs = require('fs');
 
 /**
  * Wrapper function
@@ -16,9 +19,6 @@
  * @return {function}
  */
 module.exports = function (gulp) {
-	const watch = require('gulp-watch');
-	const touch = require('gulp-touch');
-
 	const watchers = {};
 	const cache = {};
 
@@ -51,8 +51,15 @@ module.exports = function (gulp) {
 		// start new one
 		watchers[watcherName] = watch(watchingSrc, {read: false}, function () {
 			// touch the file on changes
-			return gulp.src(touchSrc)
-				.pipe(touch());
+			return gulp.src(touchSrc, {buffer: false, read: false})
+				.on('data', function (file) {
+					let time = new Date();
+					fs.utimes(file.path, time, time, err => {
+						if (err) {
+							this.emit('end');
+						}
+					});
+				});
 		});
 
 		// when changing the cache and starting a new watcher - return the true value.
