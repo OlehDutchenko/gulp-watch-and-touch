@@ -1,6 +1,6 @@
 {
   "name": "gulp-watch-and-touch",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Watch out for dependent files, if they change - touch the file that includes them or any other file you need.",
   "main": "index.js",
   "scripts": {
@@ -28,7 +28,7 @@
     "node": ">= 6.3.0"
   },
   "dependencies": {
-    "gulp-watch": "^4.3.11"
+    "gulp-watch": "^5.0.1"
   },
   "devDependencies": {
     "happiness": "^10.0.2",
